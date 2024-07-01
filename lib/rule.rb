@@ -3,6 +3,7 @@ class Rule
   def initialize(options)
     default_options = {
       :match => /.*/,
+      :request_method => :all,
       :metric => :rph,
       :type => :frequency,
       :limit => 100,
@@ -16,6 +17,10 @@ class Rule
 
   def match
     @options[:match].class == String ? Regexp.new(@options[:match] + "$") : @options[:match]
+  end
+
+  def request_method
+    @options[:request_method] || :all
   end
 
   def limit
