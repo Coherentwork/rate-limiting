@@ -1,5 +1,5 @@
-require "json"
-require "rule"
+require 'json'
+require 'rule'
 
 class RateLimiting
 
@@ -24,13 +24,13 @@ class RateLimiting
 
   def rate_limit_exceeded(accept)
     accept ||= 'text/html'
-    case accept.gsub(/;.*/, "").split(',')[0]
-    when "text/xml"         then message, type  = xml_error("403", "Rate Limit Exceeded"), "text/xml"
-    when "application/json" then message, type  = ["Rate Limit Exceeded"], "application/json"
+    case accept.gsub(/;.*/, '').split(',')[0]
+    when 'text/xml'         then message, type  = xml_error('403', 'Rate Limit Exceeded'), 'text/xml'
+    when 'application/json' then message, type  = ['Rate Limit Exceeded'], 'application/json'
     else
-      message, type  = ["Rate Limit Exceeded"], "text/html"
+      message, type  = ['Rate Limit Exceeded'], 'text/html'
     end
-    [403, {"Content-Type" => type}, message]
+    [403, {'Content-Type' => type}, message]
   end
 
   def define_rule(options)
@@ -138,7 +138,7 @@ class RateLimiting
   end
 
   def get_header(times, reset, limit)
-    {'x-RateLimit-Limit' => limit.to_s, 'x-RateLimit-Remaining' => (limit - times).to_s, 'x-RateLimit-Reset' => reset.strftime("%d%m%y%H%M%S") }
+    {'x-RateLimit-Limit' => limit.to_s, 'x-RateLimit-Remaining' => (limit - times).to_s, 'x-RateLimit-Reset' => reset.strftime('%d%m%y%H%M%S') }
   end
 
   def xml_error(code, message)
